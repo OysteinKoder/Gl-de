@@ -4,12 +4,23 @@ const submitTask = document.querySelector("#submit_task");
 const taskList = document.querySelector("#task_list");
 const todoForm = document.querySelector("#todo_form");
 
+// saves the data to localStorage
+function saveData() {
+  localStorage.setItem("taskList", taskList.innerHTML);
+}
+
+// loads the data from localStorage
+function loadData() {
+  taskList.innerHTML = localStorage.getItem("taskList");
+}
+loadData();
+
 // adds a new task to the taskList
 function addTask() {
   if (inputText.value) {
     const newTask = document.createElement("li");
     const deleteButton = document.createElement("button");
-    deleteButton.textContent = "🗑️";
+    deleteButton.textContent = "Delete";
 
     newTask.textContent = inputText.value;
     taskList.appendChild(newTask);
@@ -27,20 +38,7 @@ taskList.addEventListener("click", function (event) {
 
 // prevents the default form submission behavior and calls addTask()
 // the default submission behavior refreshes the page, which we don't want
-// it leads to bugs
 todoForm.addEventListener("submit", function (event) {
   event.preventDefault();
   addTask();
 });
-
-// saves the data to localStorage
-// is fired by the add data function
-function saveData() {
-  localStorage.setItem("taskList", taskList.innerHTML);
-}
-
-// loads the data from localStorage
-function loadData() {
-  taskList.innerHTML = localStorage.getItem("taskList");
-}
-loadData();
